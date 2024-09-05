@@ -19,6 +19,7 @@ public partial class ApplicationDbContext : DbContext
     }
 
 
+
     // DTOs (not recommended to add DTOs as DbSet)
     public virtual DbSet<CreateContactUs> CreateContactUs { get; set; }
     public virtual DbSet<AddImagesToProject> AddImagesToProjects { get; set; }
@@ -48,14 +49,6 @@ public partial class ApplicationDbContext : DbContext
 
 
 
-
-
-
-
-
-
-
-
     // Define DbSet properties for your entities
     public virtual DbSet<Admin> Admins { get; set; }
 
@@ -66,6 +59,8 @@ public partial class ApplicationDbContext : DbContext
     public virtual DbSet<Education> Educations { get; set; }
 
     public virtual DbSet<Experience> Experiences { get; set; }
+
+    public virtual DbSet<Pagecontent> Pagecontents { get; set; }
 
     public virtual DbSet<Project> Projects { get; set; }
 
@@ -160,6 +155,24 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.StartDate).HasColumnType("datetime");
             entity.Property(e => e.Title).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<Pagecontent>(entity =>
+        {
+            entity.HasKey(e => e.Pagecontentid).HasName("PRIMARY");
+
+            entity.ToTable("pagecontent");
+
+            entity.Property(e => e.Pagecontentid)
+                .HasColumnType("bigint(20)")
+                .HasColumnName("PAGECONTENTID");
+            entity.Property(e => e.Contentkey)
+                .HasMaxLength(100)
+                .HasColumnName("CONTENTKEY");
+            entity.Property(e => e.Contentvalue).HasColumnName("CONTENTVALUE");
+            entity.Property(e => e.Pagename)
+                .HasMaxLength(100)
+                .HasColumnName("PAGENAME");
         });
 
         modelBuilder.Entity<Project>(entity =>
